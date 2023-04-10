@@ -1,0 +1,17 @@
+[43271:259:0407/131025.383024:WARNING:chrome_main_delegate.cc(594)] This is Chrome version 112.0.5615.49 (not a warning)
+[43271:259:0407/131025.799587:INFO:chrome_browser_cloud_management_controller.cc(167)] Starting CBCM Controller Initialization
+[43271:259:0407/131025.800437:INFO:chrome_browser_cloud_management_controller.cc(195)] No machine level policy manager exists.
+[43271:259:0407/131032.498693:INFO:CONSOLE(0)] "
+%cStop! font-family:helvetica; font-size:20px; font-size:50px; font-weight:bold; color:red; -webkit-text-stroke:1px black;", source:  (0)
+[43271:259:0407/131032.498779:INFO:CONSOLE(0)] "
+%cThis is a browser feature intended for developers. If someone told you to copy-paste something here to enable a Facebook feature or "hack" someone's account, it is a scam and will give them access to your Facebook account. font-family:helvetica; font-size:20px; ", source:  (0)
+[43271:259:0407/131032.498826:INFO:CONSOLE(0)] "
+%cSee https://www.facebook.com/selfxss for more information. font-family:helvetica; font-size:20px; ", source:  (0)
+[43271:259:0407/131032.498870:INFO:CONSOLE(0)] "
+%c ", source:  (0)
+[43271:259:0407/131041.138657:WARNING:controller_impl.cc(1191)] Background download complete, client: 6, completion type: 0, file size:265059
+[43271:259:0407/131041.631677:WARNING:controller_impl.cc(1191)] Background download complete, client: 6, completion type: 0, file size:5088
+[43271:259:0407/131042.260801:WARNING:controller_impl.cc(1191)] Background download complete, client: 6, completion type: 0, file size:9419
+[43271:259:0407/131042.958743:WARNING:controller_impl.cc(1191)] Background download complete, client: 6, completion type: 0, file size:34546926
+[43271:259:0407/131043.358816:WARNING:controller_impl.cc(1191)] Background download complete, client: 6, completion type: 0, file size:45136
+[43271:259:0407/131133.426966:WARNING:pref_notifier_impl.cc(41)] Pref observer for media_router.cast_allow_all_ips found at shutdown.
