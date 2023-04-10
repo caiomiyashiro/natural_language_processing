@@ -1,0 +1,59 @@
+{
+  "twitter":
+  {
+    "username": "xxxx@gmail.com",
+    "password": "xxx",
+    "otp_key": "xxx"
+  },
+  "facebook":
+  {
+    "credentials":
+    {
+      "username": "xxx@gmail.com",
+      "password": "xxx"
+    },
+    "query_filters":
+    [
+      {
+        "department":"furniture",
+        "minPrice":10,
+        "maxPrice":200,
+        "daysSinceListed":1,
+        "sortBy":"price_ascend",
+        "__possible_sortBy_filters": ["creation_time_descend", "distance_ascend", "price_ascend"]
+      },
+      {
+        "department":"appliances",
+        "minPrice":null,
+        "maxPrice":null,
+        "daysSinceListed":null,
+        "sortBy":null,
+        "__possible_sortBy_filters": ["creation_time_descend", "distance_ascend", "price_ascend"]
+      }
+    ]
+  },
+  "superbid":
+  {
+    "query_filters":
+    [
+      {
+        "department":"eletrodomesticos",
+        "filter":"price:range[687TO11936]",
+        "orderBy":"price:asc",
+        "__possible_orderBy_filters": ["lotNumber:asc", "visits:desc", "endDate:asc"]
+      },
+      {
+        "department":"appliances",
+        "filter":null,
+        "orderBy":null,
+        "__possible_orderBy_filters": ["lotNumber:asc", "visits:desc", "endDate:asc"]
+      },
+      {
+        "department":"artes-decoracao-colecionismo",
+        "filter":null,
+        "orderBy":null,
+        "__possible_orderBy_filters": ["lotNumber:asc", "visits:desc", "endDate:asc"]
+      }
+    ]
+  }
+}
