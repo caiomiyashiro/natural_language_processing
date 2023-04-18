@@ -1,0 +1,3 @@
+# https://www.jcchouinard.com/python-automation-with-cron-on-mac/
+
+0 * * * * cd /Users/caiomiyashiro/repo/Personal/natural_language_processing/topic_modelling/webscraper  && /Users/caiomiyashiro/opt/anaconda3/envs/dev/bin/python main.py

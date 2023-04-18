@@ -2,6 +2,7 @@ import time      # time.sleep
 import bs4 as bs # processing HTML retrieved from Selenium
 import re        # finding text by regular expressions
 import os.path   # checking if scrape csv file is present
+import pickle
 
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
@@ -17,7 +18,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 from datetime import datetime, timedelta
 from unidecode import unidecode # normalize (á -> a)superbid product name in order to create URL
-from utils import get_credentials, create_url_pars
+from utils import get_credentials, create_url_pars, get_lf_outputs
 
 import pyotp                    # OTP functions
 import pandas as pd             # tabular data
@@ -77,6 +78,7 @@ class Webscraper():
             print('Logging into Twitter...')
             credentials = get_credentials('twitter')
             self.driver.get("https://twitter.com/i/flow/login")
+            time.sleep(10)
             self.twitter_login(credentials['username'], credentials['password'], credentials['otp_key'])
         elif self.scrape_location == self.FACEBOOK_MP:
             print('Logging into Facebook...')
@@ -251,6 +253,7 @@ class Webscraper():
         Args:
             n_scrolls (int) : Number of ``PAGE DOWN`` button clicks to perform in the browser and load more items.
             remove_duplicates (bool) : Whether to remove possible retrieved duplicated fields.
+            label_model_path (str) : label model path used as true price label
 
         Returns:
             Retrieved data frame.
@@ -258,7 +261,9 @@ class Webscraper():
         # Wait for the page to load.
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, "div[class=' x1gslohp x1e56ztr']")))
 
-        query_filters_list = get_credentials('facebook')['query_filters']
+        parameters = get_credentials('facebook')
+        query_filters_list = parameters['query_filters']
+        label_model_path = parameters['label_model_path']
         df_final = pd.DataFrame()
         for query_filters in query_filters_list:
             department = query_filters['department']
@@ -324,13 +329,13 @@ class Webscraper():
                                'image_src': images_src})
             if remove_duplicates:
                 df = df.drop_duplicates()
+            df = self.facebook_marketplace_enrich(df=df, label_model_path=label_model_path)
             df['department'] = department
             df['scraped_at'] = datetime.now().strftime('%Y-%m-%d %H:%M')
-            df = self.facebook_marketplace_enrich(df)
             df_final = pd.concat([df_final, df])
         return df_final
 
-    def facebook_marketplace_enrich(self, df:pd.DataFrame) -> pd.DataFrame:
+    def facebook_marketplace_enrich(self, df:pd.DataFrame, label_model_path:str=None) -> pd.DataFrame:
         """Add extra informations for the items retrieved in the scrape function.
 
         Access each item page retrieved in the ``scrape`` function and extract more information.
@@ -338,6 +343,7 @@ class Webscraper():
 
         Args:
             df (pd.DataFrame) : Data retrieved from Facebook Marketplace.
+            label_model_path (str): label model path used as true price label
 
         Returns:
             Enriched data frame.
@@ -365,6 +371,14 @@ class Webscraper():
         df['condition'] = conditions
         df['description'] = descriptions
         df['time_posted'] = times_posted
+
+        if label_model_path is not None:
+            labels_LF = get_lf_outputs(df)
+            with open(label_model_path, "rb") as model_file:
+                label_model = pickle.load(model_file)
+            df['is_true_price'] = label_model.predict(labels_LF)
+        else:
+            df['is_true_price'] = None
         return df
 
     def twitter_login(self, username:str, password:str, otp_key:str):
